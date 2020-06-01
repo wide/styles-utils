@@ -1,0 +1,69 @@
+@use 'number' as number;
+@use '../variables' as *;
+
+///
+/// Converts the given pixel value to its EM quivalent.
+///
+/// @param  {Number} $size                      - The pixel value to convert.
+/// @param  {Number} $context [$body-context]   - The assumed base font size.
+/// @return {Number} Scalable pixel value in EMs.
+///
+/// @access public
+///
+@function em($size, $context: $body-context) {
+  $size: number.check-value-unit($size);
+  $context: number.check-value-unit($context);
+
+  @return ($size / $context) * 1em;
+}
+
+///
+/// Converts the given pixel value to its REM quivalent.
+///
+/// @param  {Number} $size                      - The pixel value to convert.
+/// @param  {Number} $context [$body-context]   - The assumed base font size.
+/// @return {Number} Scalable pixel value in EMs.
+///
+/// @access public
+///
+@function rem($size, $context: $body-context) {
+  $size: number.check-value-unit($size);
+  $context: number.check-value-unit($context);
+  $rem-size: $size / $context;
+
+  @return #{$rem-size}rem;
+}
+
+///
+/// Converts a number to a percentage.
+///
+/// @alias  percentage()
+///
+/// @param  {Number} $number - The value to convert.
+/// @return {Number} A percentage.
+///
+/// @access public
+///
+@function span($number) {
+  @return math.percentage($number);
+}
+
+///
+/// Resolve whether a rule is important or not.
+///
+/// @param  {boolean}     $flag - Whether a rule is important (TRUE) or not (FALSE).
+/// @return {String|Null} Returns `!important` or NULL.
+///
+/// @access public
+///
+@function important($flag: false) {
+  @if $flag == true or $flag != false {
+    @if $flag != true {
+      @warn '`#{$flag}` needs to be `true` or `false`.';
+    }
+
+    @return !important;
+  } @else {
+    @return null;
+  }
+}

@@ -1,0 +1,186 @@
+@use 'sass:list';
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use 'common' as common;
+@use '../variables' as *;
+
+///
+/// Set em value of the asked BP
+///
+/// @param  {String|Number} $query
+/// @param  {boolean} $type [false] - If down BP is asked
+/// @return {Number}
+///
+/// @access private
+///
+@function value($query, $is-down: false) {
+  $value: validate($query);
+
+  // if down BP is asked...
+  @if $is-down == true {
+    // ... and the value is a PX unit...
+    @if math.unit($value) == 'px' {
+      // ... subtract 0.02px to avoid some browser bug (empty pixel)
+      $value: $value - $breakpoint-px-down;
+    }
+  }
+
+  @return convert-to-em($value);
+}
+
+///
+/// Checks if $query given is one of the following:
+///   * is a $key in the $breakpoints map
+///   * is a number
+///
+/// @param  {String|Number} $query
+/// @return {Any}
+///
+/// @access private
+///
+@function validate($query) {
+  $return: null;
+
+  @if map.has-key($breakpoints, $query) {
+    $return: map.get($breakpoints, $query);
+  } @else if meta.type-of($query) == number {
+    $return: $query;
+  } @else {
+    @error 'Breakpoint query must be valid';
+  }
+
+  @return $return;
+}
+
+///
+/// Get $query min / max in the $breakpoints map
+///
+/// @param  {String|Number} $query
+/// @return {List}
+///
+/// @access private
+///
+@function query-min-max($query) {
+  $values: ();
+  $bp-keys: map.keys($breakpoints);
+  $bp-values: map.values($breakpoints);
+
+  @if map.has-key($breakpoints, $query) {
+    $index: list.index($bp-keys, $query);
+
+    // if not the last index
+    @if list.length($breakpoints) > $index {
+      // value min
+      $values: list.append($values, map.get($breakpoints, $query));
+
+      // value max
+      $values: list.append(
+        $values,
+        list.nth($bp-values, $index + 1) - $breakpoint-px-down
+      );
+    } @else { // else, if the last index, there is only one value
+      // value min
+      $values: list.append($values, map.get($breakpoints, $query));
+    }
+  } @else if $query == 0 {
+    // value min
+    $values: list.append($values, 0);
+
+    // value max
+    $values: list.append(
+      $values,
+      map.get($breakpoints, list.nth($bp-keys, 1)) - $breakpoint-px-down
+    );
+  } @else {
+    @error 'Breakpoint query must be valid';
+  }
+
+  @return $values;
+}
+
+///
+/// Checks and converts px and rem values to em.
+///
+/// @param  {Number} $value - The pixel or rem value to convert.
+/// @return {Number} Scalable value in EMs.
+///
+/// @access private
+///
+@function convert-to-em($value) {
+  // if no unit specified, set as px
+  @if math.unit($value) == '' {
+    $value: $value * 1px;
+  }
+
+  // convert value to em
+  @if math.unit($value) == 'px' or $value == 0 {
+    @return common.em($value);
+  } @else if math.unit($value) == 'em' {
+    @return $value;
+  } @else if math.unit($value) == 'rem' {
+    @return ($value / ($value * 0 + 1)) * 1em; // hack ($value * 1em) not working
+  } @else {
+    @error 'Breakpoint value must have a unit if it\'s a number';
+  }
+}
+
+///
+/// Sort queries value function
+///
+/// @param  {List} $values
+/// @return {List}
+///
+/// @access private
+///
+@function sort($values) {
+  @if list.length($values) == 2 {
+    $value1: list.nth($values, 1);
+    $value2: list.nth($values, 2);
+
+    @if $value1 > $value2 {
+      $values: ($value2, $value1);
+    }
+  }
+
+  @return $values;
+}
+
+///
+/// Set media query.
+///
+/// @param  {Number|List} $values - The media query values
+/// @param  {boolean} $height - The media query measurement (width (default) or height)
+/// @param  {string} $type - The media query type (all, screen, ...)
+/// @param  {boolean} $max [false] - Is a max measurement ?
+///
+/// @access private
+///
+@mixin media($values, $height, $media, $max: false) {
+  $min-max: if($max == true, 'max', 'min');
+  $measurement: if($height == true, 'height', 'width');
+  $between: if(list.length($values) > 1, true, false);
+
+  // generate media query
+  @if $media == 'screen' {
+    @if $between == true {
+      @media screen and (min-#{$measurement}: list.nth($values, 1)) and (max-#{$measurement}: list.nth($values, 2)) {
+        @content;
+      }
+    } @else {
+      @media screen and (#{$min-max}-#{$measurement}: list.nth($values, 1)) {
+        @content;
+      }
+    }
+  } @else {
+    @if $between == true {
+      @media (min-#{$measurement}: list.nth($values, 1)) and (max-#{$measurement}: list.nth($values, 2)) {
+        @content;
+      }
+    } @else {
+      @media (#{$min-max}-#{$measurement}: list.nth($values, 1)) {
+        @content;
+      }
+    }
+  }
+}

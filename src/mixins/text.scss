@@ -1,0 +1,19 @@
+///
+/// Prevent text from wrapping onto multiple lines for the current element.
+///
+/// An ellipsis is appended to the end of the line.
+///
+/// 1. Ensure that the node has a maximum width after which truncation can occur.
+///
+/// @param  {Length} $width [100%] - The maximum width of element.
+/// @output `max-width`, `word-wrap`, `white-space`, `overflow`, `text-overflow`.
+///
+@mixin truncate($width: 100%) {
+  @if $width {
+    max-width: $width; // -> [1]
+  }
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

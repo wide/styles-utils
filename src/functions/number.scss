@@ -1,0 +1,26 @@
+@use 'sass:math';
+@use 'sass:meta';
+
+///
+/// Check the unit of the size in paramater.
+/// Needs to be in pixel.
+///
+/// @param  {Number} $size - The size value to test.
+/// @return {Number} The pixel value if correct.
+///
+/// @access private
+///
+@function check-value-unit($size) {
+  @if meta.type-of($size) == number {
+    @if math.is-unitless($size) {
+      $size: $size * 1px;
+    }
+    @if math.unit($size) != 'px' {
+      @error '`#{$size}` needs to be a pixel value.';
+    }
+  } @else {
+    @error '`#{$size}` needs to be a number.';
+  }
+
+  @return $size;
+}

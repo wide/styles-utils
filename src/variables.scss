@@ -1,0 +1,213 @@
+/// -----------------------------------------------------------------------------------------------
+/// BREAKPOINTS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Breakpoints list
+///
+/// @type List
+/// @prop {Length} value
+///
+$breakpoints: (
+  'xs': 326px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 1024px,
+  'xl': 1200px,
+  'xxl': 1600px
+) !default;
+
+///
+/// Difference value between min-width and max-width.
+/// For more information, see the link below:
+/// @link https://stackoverflow.com/a/51567792
+///
+/// @type Length
+///
+$breakpoint-px-down: .02px !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// CONTEXT
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Body context (used to set the size of the rem or em)
+///
+/// @type Length
+///
+$body-context: 16px !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// DELIMITERS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Modulus uses fractions-like classes like `<div class="foo-1/3">`.
+/// You can change the `/` to whatever you fancy with this variable.
+///
+/// @type String
+///
+$delimiter-fraction: \/ !default;
+
+///
+/// Modulus uses the responsive suffixes for the classes with
+/// a `@` symbol so you get classes like: `<div class="foo-3/12@sm">`.
+/// You can change the `@` to whatever you fancy with this variable.
+///
+/// @type String
+///
+$delimiter-breakpoint: \@ !default;
+
+///
+/// Modulus uses ratios-like classes like `<div class="foo-16:9">`.
+/// You can change the `:` to whatever you fancy with this variable.
+///
+/// @type String
+///
+$delimiter-ratio: \: !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// EASINGS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Back easings
+/// @link https://easings.net/fr#easeInBack
+/// @link https://easings.net/fr#easeOutBack
+/// @link https://easings.net/fr#easeInOutBack
+///
+/// @type Function
+///
+$back-ease-in: cubic-bezier(.6, -.28, .735, .045) !default;
+$back-ease-out: cubic-bezier(.175, .885, .32, 1.275) !default;
+$back-ease-in-out: cubic-bezier(.68, -.55, .265, 1.55) !default;
+
+///
+/// Circ easings
+/// @link https://easings.net/fr#easeInCirc
+/// @link https://easings.net/fr#easeOutCirc
+/// @link https://easings.net/fr#easeInOutCirc
+///
+/// @type Function
+///
+$circ-ease-in: cubic-bezier(.6, .04, .98, .335) !default;
+$circ-ease-out: cubic-bezier(.075, .82, .165, 1) !default;
+$circ-ease-in-out: cubic-bezier(.785, .135, .15, .86) !default;
+
+///
+/// Expo easings
+/// @link https://easings.net/fr#easeInExpo
+/// @link https://easings.net/fr#easeOutExpo
+/// @link https://easings.net/fr#easeInOutExpo
+///
+/// @type Function
+///
+$expo-ease-in: cubic-bezier(.95, .05, .795, .035) !default;
+$expo-ease-out: cubic-bezier(.19, 1, .22, 1) !default;
+$expo-ease-in-out: cubic-bezier(1, 0, 0, 1) !default;
+
+///
+/// Sine easings
+/// @link https://easings.net/fr#easeInSine
+/// @link https://easings.net/fr#easeOutSine
+/// @link https://easings.net/fr#easeInOutSine
+///
+/// @type Function
+///
+$sine-ease-in: cubic-bezier(.47, 0, .745, .715) !default;
+$sine-ease-out: cubic-bezier(.39, .575, .565, 1) !default;
+$sine-ease-in-out: cubic-bezier(.445, .05, .55, .95) !default;
+
+///
+/// Power1 (Quad) easings
+/// @link https://easings.net/fr#easeInQuad
+/// @link https://easings.net/fr#easeOutQuad
+/// @link https://easings.net/fr#easeInOutQuad
+///
+/// @type Function
+///
+$power1-ease-in: cubic-bezier(.55, .085, .68, .53) !default;
+$power1-ease-out: cubic-bezier(.25, .46, .45, .94) !default;
+$power1-ease-in-out: cubic-bezier(.455, .03, .515, .955) !default;
+
+///
+/// Power2 (Cubic) easings
+/// @link https://easings.net/fr#easeInCubic
+/// @link https://easings.net/fr#easeOutCubic
+/// @link https://easings.net/fr#easeInOutCubic
+///
+/// @type Function
+///
+$power2-ease-in: cubic-bezier(.55, .055, .675, .19) !default;
+$power2-ease-out: cubic-bezier(.215, .61, .355, 1) !default;
+$power2-ease-in-out: cubic-bezier(.645, .045, .355, 1) !default;
+
+///
+/// Power3 (Quart) easings
+/// @link https://easings.net/fr#easeInQuart
+/// @link https://easings.net/fr#easeOutQuart
+/// @link https://easings.net/fr#easeInOutQuart
+///
+/// @type Function
+///
+$power3-ease-in: cubic-bezier(.895, .03, .685, .22) !default;
+$power3-ease-out: cubic-bezier(.165, .84, .44, 1) !default;
+$power3-ease-in-out: cubic-bezier(.77, 0, .175, 1) !default;
+
+///
+/// Power4 (Quint) easings
+/// @link https://easings.net/fr#easeInQuint
+/// @link https://easings.net/fr#easeOutQuint
+/// @link https://easings.net/fr#easeInOutQuint
+///
+/// @type Function
+///
+$power4-ease-in: cubic-bezier(.755, .05, .855, .06) !default;
+$power4-ease-out: cubic-bezier(.23, 1, .32, 1) !default;
+$power4-ease-in-out: cubic-bezier(.86, 0, .07, 1) !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// ENVIRONMENT
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Relative path to the `assets` directory
+///
+/// @type String
+///
+$assets-path: '../' !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// FONTS
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Formats of web fonts to load by default
+///
+/// @type List
+///
+$font-formats: 'woff2', 'woff' !default;
+
+///
+/// -----------------------------------------------------------------------------------------------
+/// LINE HEIGHT
+/// -----------------------------------------------------------------------------------------------
+///
+
+///
+/// Default line height
+///
+/// @type Length
+///
+$line-height-default: 1.4 !default;

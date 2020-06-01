@@ -1,0 +1,108 @@
+@use 'sass:list';
+@use '../functions/breakpoint' as breakpoint;
+@use '../variables' as *;
+
+///
+/// Define a media query value as the minimun reaching point
+///
+/// @param  {String|Length} $query - The min media query value (xs, 1500px, 30em, ...)
+/// @param  {boolean} $height [false] - The media query measurement (width (default) or height)
+/// @param  {string} $type [all] - The media query type (all, screen, ...)
+///
+/// @requires {function} breakpoint-media
+/// @requires {function} breakpoint-value
+///
+@mixin up($query, $height: false, $type: all) {
+  $value: breakpoint.value($query);
+
+  // outputs media string
+  @include breakpoint.media($value, $height, $type) {
+    @content;
+  }
+}
+
+///
+/// Define a media query value as the maximum reaching point
+///
+/// @param  {String|Length} $query - The max media query value (xs, 1500px, 30em, ...)
+/// @param  {boolean} $height [false] - The media query measurement (width (default) or height)
+/// @param  {string} $type [all] - The media query type (all, screen, ...)
+///
+/// @requires {function} breakpoint-media
+/// @requires {function} breakpoint-value
+///
+@mixin down($query, $height: false, $type: all) {
+  $value: breakpoint.value($query, true);
+
+  // outputs media string
+  @include breakpoint.media($value, $height, $type, true) {
+    @content;
+  }
+}
+
+///
+/// Define a range of media query values
+///
+/// @param  {String|Length} $query-min - The min media query value (xs, 1500px, 30em, ...)
+/// @param  {String|Length} $query-max - The max media query value (xs, 1500px, 30em, ...)
+/// @param  {boolean} $height [false] - The media query measurement (width (default) or height)
+/// @param  {string} $type [all] - The media query type (all, screen, ...)
+///
+/// @requires {function} breakpoint-media
+/// @requires {function} breakpoint-sort
+/// @requires {function} breakpoint-value
+///
+@mixin between($query-min, $query-max, $height: false, $type: all) {
+  $list: (
+    breakpoint.value($query-min),
+    breakpoint.value($query-max)
+  );
+  $values: breakpoint.sort($list);
+
+  // outputs media string
+  @include breakpoint.media($values, $height, $type) {
+    @content;
+  }
+}
+
+///
+/// Define a media query value as the only reaching point
+///
+/// @param  {String|Length} $query - The media query value (xs, 1500px, 30em, ...)
+/// @param  {string} $type [all] - The media query type (all, screen, ...)
+///
+/// @requires {function} breakpoint-query-min-max
+///
+@mixin only($query, $type: all) {
+  $value: breakpoint.query-min-max($query);
+  $value-min: list.nth($value, 1);
+
+  // outputs media string
+  @if length($value) == 2 {
+    $value-max: list.nth($value, 2);
+
+    @if $value-min == 0 {
+      @include down($value-max) {
+        @content;
+      }
+    } @else {
+      @include between($value-min, $value-max) {
+        @content;
+      }
+    }
+  } @else {
+    @include up($value-min) {
+      @content;
+    }
+  }
+}
+
+///
+/// Define print media query rules
+///
+@mixin print() {
+  // outputs media string
+  @media print {
+    @content;
+  }
+}

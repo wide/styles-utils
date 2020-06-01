@@ -1,0 +1,42 @@
+///
+/// Set whether or not touch devices use momentum-based scrolling for the given element.
+/// By default, applies momentum-based scrolling for the current element.
+///
+/// @output `-webkit-overflow-scrolling`
+///
+@mixin scroll {
+  -webkit-overflow-scrolling: touch;
+}
+
+///
+/// Set the color of the highlight that appears over a link while it's being tapped.
+/// By default, the highlight is suppressed.
+///
+/// @param  {Color} $value [rgba(0, 0, 0, 0)] - The value of the highlight.
+/// @output `-webkit-tap-highlight-color`
+///
+@mixin tap($value: rgba(0, 0, 0, 0)) {
+  -webkit-tap-highlight-color: $value;
+}
+
+///
+/// Finding out if touch is available for the page document.
+///
+/// @output Wraps the given content
+///
+@mixin enabled {
+  @at-root .-touch-based & {
+    @content;
+  }
+}
+
+///
+/// Finding out if touch is not available for the page document.
+///
+/// @output Wraps the given content
+///
+@mixin disabled {
+  @at-root :not(.-touch-based) & {
+    @content;
+  }
+}

@@ -1,0 +1,59 @@
+@use 'sass:meta';
+@use 'list' as list;
+
+///
+/// Grid-like layout system.
+///
+/// The layout tools provide a column-style layout system. This file contains
+/// the mixins to generate basic structural elements.
+///
+/// @link https://github.com/inuitcss/inuitcss/blob/0420ba8/objects/_objects.layout.scss
+/// @link https://github.com/locomotivemtl/locomotive-boilerplate
+///
+
+///
+/// Generate the grid container.
+///
+/// 1. Use the negative margin trick for multi-row grids:
+///    http://csswizardry.com/2011/08/building-better-grid-systems/
+///
+/// @requires {function} list-reset
+///
+/// @output   `font-size`, `margin`, `padding`, `list-style`
+///
+@mixin container($gutter: 0, $fix-whitespace: true) {
+  @include list.reset;
+
+  @if $fix-whitespace {
+    font-size: 0;
+  }
+  @if meta.type-of($gutter) == number {
+    margin-left: -$gutter; // -> [1]
+  }
+}
+
+///
+/// Generate the grid item.
+///
+/// 1. Allows us to manipulate grids vertically, with text-level properties,
+///    etc.
+/// 2. Required in order to combine fluid widths with fixed gutters.
+/// 3. By default, all layout items are full-width (mobile first).
+/// 4. Default item alignment is with the tops of each other, like most
+///    traditional grid/layout systems.
+/// 5. Gutters provided by left padding:
+///    http://csswizardry.com/2011/08/building-better-grid-systems/
+///
+@mixin item($gutter: 0, $fix-whitespace: true) {
+  display: inline-block; // -> [1]
+  box-sizing: border-box; // -> [2]
+  width: 100%; // -> [3]
+  vertical-align: top; // -> [4]
+
+  @if $fix-whitespace {
+    font-size: 1rem;
+  }
+  @if meta.type-of($gutter) == number {
+    padding-left: $gutter; // -> [5]
+  }
+}

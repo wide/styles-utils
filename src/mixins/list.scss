@@ -1,0 +1,10 @@
+///
+/// Injects generic rules for disabling `ul`, `ol`, `li` styles.
+///
+/// @output `list-style`, `margin`, `padding`.
+///
+@mixin reset {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}

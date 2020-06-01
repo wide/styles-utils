@@ -1,0 +1,29 @@
+{
+  "name": "@wide/styles-utils",
+  "version": "2.0.0",
+  "description": "SCSS Utils Collection.",
+  "license": "MIT",
+  "author": "Julien Martins Da Costa (https://github.com/jdacosta)",
+  "contributors": [
+    "Aymeric Assier (https://github.com/myeti)",
+    "Julien Martins Da Costa (https://github.com/jdacosta)",
+    "Sébastien Robillard (https://github.com/robiseb)"
+  ],
+  "scripts": {
+    "lint": "stylelint *.scss src --formatter verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wide/styles-utils.git"
+  },
+  "engines": {
+    "node": ">=10.13.0"
+  },
+  "devDependencies": {
+    "@wide/stylelint-config": "^2.0.0",
+    "stylelint": "^13.5.0",
+    "stylelint-config-property-sort-order-smacss": "^6.3.0",
+    "stylelint-order": "^4.0.0",
+    "stylelint-scss": "^3.17.2"
+  }
+}

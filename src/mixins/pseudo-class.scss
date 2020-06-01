@@ -1,0 +1,88 @@
+///
+/// Generate `:active` style in one go.
+///
+/// @content Wrapped in `:active` pseudo-classe.
+/// @output  Wraps the given content in `:active` pseudo-classe.
+///
+@mixin a {
+  &:active {
+    @content;
+  }
+}
+
+///
+/// Generate `:active` and `:focus` styles in one go.
+///
+/// @content Wrapped in `:active` and `:focus` pseudo-classe.
+/// @output  Wraps the given content in `:active` and `:focus` pseudo-classe.
+///
+@mixin af {
+  &:active,
+  &:focus {
+    @content;
+  }
+}
+
+///
+/// Generate `:active` and `:hover` styles in one go.
+///
+/// @content Wrapped in `:active` and `:hover` pseudo-classe.
+/// @output  Wraps the given content in `:active` and `:hover` pseudo-classe.
+///
+@mixin ah {
+  &:active,
+  &:hover {
+    @content;
+  }
+}
+
+///
+/// Generate `:active`, `:focus` and `:hover` styles in one go.
+///
+/// @content Wrapped in `:active`, `:focus` and `:hover` pseudo-classe.
+/// @output  Wraps the given content in `:active`, `:focus` and `:hover` pseudo-classe.
+///
+@mixin afh {
+  &:active,
+  &:focus,
+  &:hover {
+    @content;
+  }
+}
+
+///
+/// Generate `:focus` style in one go.
+///
+/// @content Wrapped in `:focus` pseudo-classe.
+/// @output  Wraps the given content in `:focus` pseudo-classe.
+///
+@mixin f {
+  &:focus {
+    @content;
+  }
+}
+
+///
+/// Generate `:focus` and `:hover` styles in one go.
+///
+/// @content Wrapped in `:focus` and `:hover` pseudo-classe.
+/// @output  Wraps the given content in `:focus` and `:hover` pseudo-classe.
+///
+@mixin fh {
+  &:focus,
+  &:hover {
+    @content;
+  }
+}
+
+///
+/// Generate `:hover` styles in one go.
+///
+/// @content Wrapped in `:hover` pseudo-classe.
+/// @output  Wraps the given content in `:hover` pseudo-classe.
+///
+@mixin h {
+  &:hover {
+    @content;
+  }
+}

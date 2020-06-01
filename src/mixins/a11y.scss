@@ -1,0 +1,32 @@
+@use '../functions/common' as common;
+
+///
+/// Applies accessible hiding to the current element.
+///
+/// @param  {boolean} $important [true] - Whether the visibility is important.
+/// @output Properties for removing the element from the document flow.
+///
+@mixin only($important: true) {
+  $i: common.important($important);
+
+  position: absolute $i;
+  width: 1px $i;
+  height: 1px $i;
+  margin: 0 $i;
+  padding: 0 $i;
+  overflow: hidden $i;
+  clip: rect(0 0 0 0) $i;
+  border: 0 $i;
+  white-space: nowrap $i;
+}
+
+///
+/// Allows an accessibly hidden element to be focusable via keyboard navigation.
+///
+/// @output  Injects accessible for elements not focused.
+///
+@mixin focusable($important: true) {
+  &:not(:focus) {
+    @include only($important);
+  }
+}

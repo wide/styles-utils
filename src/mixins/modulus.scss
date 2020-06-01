@@ -1,0 +1,13 @@
+///
+/// This mixin can be used to deprecate mixins or functions.
+///
+/// @example scss
+///   @include modulus-deprecate('`text-hide()`', 'v2.1', 'v3');
+///
+/// @param {string} $name
+/// @param {string} $deprecate-version
+/// @param {string} $remove-version
+///
+@mixin deprecate($name, $deprecate-version, $remove-version) {
+  @warn '#{$name} has been deprecated as of #{$deprecate-version}. It will be removed entirely in #{$remove-version}.';
+}

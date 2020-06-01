@@ -1,0 +1,39 @@
+@use 'sass:list';
+@use 'list' as fct-list;
+@use '../variables' as *;
+
+///
+/// Builds the `src` list for an `@font-face` declaration.
+///
+/// @link https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/utilities/_font-source-declaration.scss
+/// @link https://github.com/CSSLint/csslint/wiki/Bulletproof-font-face
+///
+/// @param  {string} $font-family  - The font family name.
+/// @param  {string} $file-path    - The path to the font family.
+/// @param  {List}   $file-formats - The file formats to request.
+/// @return {List}
+///
+/// @require {function} list-contains
+///
+/// @access private
+///
+@function source-declaration($font-family, $file-path, $file-formats) {
+  $src: ();
+  $formats-map: (
+    eot: '#{$file-path}.eot?#iefix' format('embedded-opentype'),
+    woff2: '#{$file-path}.woff2' format('woff2'),
+    woff: '#{$file-path}.woff' format('woff'),
+    ttf: '#{$file-path}.ttf' format('truetype'),
+    svg: '#{$file-path}.svg##{$font-family}' format('svg'),
+  );
+
+  @each $key, $values in $formats-map {
+    @if fct-list.contains($file-formats, $key) {
+      $file-path: list.nth($values, 1);
+      $font-format: list.nth($values, 2);
+      $src: list.append($src, url('#{$assets-path}#{$file-path}') $font-format, comma);
+    }
+  }
+
+  @return $src;
+}

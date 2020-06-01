@@ -1,0 +1,85 @@
+@use 'sass:math';
+@use 'sass:meta';
+@use '../variables' as *;
+@use '../functions/common' as common;
+@use '../functions/font' as font;
+
+///
+/// Generates an `@font-face` declaration.
+///
+/// You can choose the specific file formats you need to output; the mixin supports
+/// `eot`, `ttf`, `svg`, `woff2` and `woff`.
+///
+/// @link https://github.com/thoughtbot/bourbon/blob/master/core/bourbon/library/_font-face.scss
+///
+/// @param {string}      $font-family          - The font family name.
+/// @param {string}      $file-path            - The path to the font family.
+/// @param {String|List} $file-formats-default [("ttf", "woff2", "woff")]
+///     A list of file formats to support,
+///     for example ("eot", "ttf", "svg", "woff2", "woff").
+///
+/// @content
+///     Any additional CSS properties that are included in the `@include`
+///     directive will be output within the `@font-face` declaration, e.g.
+///     you can pass in `font-weight`, `font-style` and/or `unicode-range`.
+///
+/// @requires {function} font-source-declaration
+///
+/// @example scss
+///   @include font-face(
+///       "source-sans-pro",
+///       "fonts/source-sans-pro-regular",
+///       ("woff2", "woff")
+///     ) {
+///     font-display: swap;
+///     font-style: normal;
+///     font-weight: 400;
+///   }
+///
+///   // CSS Output
+///   @font-face {
+///     font-family: "source-sans-pro";
+///     src: url("fonts/source-sans-pro-regular.woff2") format("woff2"),
+///          url("fonts/source-sans-pro-regular.woff") format("woff");
+///     font-display: swap;
+///     font-style: normal;
+///     font-weight: 400;
+///   }
+///
+@mixin face($font-family, $file-path, $file-formats: $font-formats) {
+  /* stylelint-disable */
+  @font-face {
+    font-family: $font-family;
+    src: font.source-declaration($font-family, $file-path, $file-formats);
+    @content;
+  }
+  /* stylelint-enable */
+}
+
+///
+/// Generate a font-size and baseline-compatible line-height.
+///
+/// @param  {Length}        $font-size           - The size of the font.
+/// @param  {Length|String} $line-height [auto]  - The line box height.
+/// @param  {boolean}       $important   [false] - Whether the font-size is important.
+/// @requires {function} common-important
+/// @requires {function} common-em
+/// @output `font-size`, `line-height`
+///
+@mixin size($font-size, $line-height: auto, $important: false) {
+  $i: common.important($important);
+
+  font-size: common.em($font-size) $i;
+
+  @if $line-height == 'auto' {
+    line-height: math.ceil($font-size / $line-height-default) * ($line-height-default / $font-size) $i;
+  } @else {
+    @if meta.type-of($line-height) == number or $line-height == 'inherit' or $line-height == 'normal' {
+      line-height: common.em($line-height) $i;
+    } @else if $line-height == 'inherit' or $line-height == 'normal' {
+      line-height: $line-height $i;
+    } @else if $line-height != 'none' and $line-height != false {
+      @error '`#{$line-height}` is not a valid value for `$line-height`.';
+    }
+  }
+}

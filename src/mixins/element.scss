@@ -1,0 +1,180 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use '../functions/list' as list;
+
+///
+/// Micro clearfix rules for containing floats.
+///
+/// @output Inject `::after` pseudo-element.
+///
+@mixin clearfix {
+  &::after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+///
+/// Center an element on the horizontal and vertical
+/// axis in absolute position.
+///
+/// @example scss
+///   @include centerer;              // horizontal and verical centering
+///   @include centerer(false);       // vertical centering
+///   @include centerer(false, true); // vertical centering
+///   @include centerer(true, false); // horizontal centering
+///
+/// @param  {boolean} $horizontal  [true] - horizontal centering.
+/// @param  {boolean} $vertical    [true] - vertical centering.
+/// @output  Injects `position`, `top`, `left` and `transform`.
+///
+@mixin centerer($horizontal: true, $vertical: true) {
+  position: absolute;
+
+  @if $horizontal and $vertical {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  } @else if $horizontal {
+    left: 50%;
+    transform: translate(-50%, 0);
+  } @else if $vertical {
+    top: 50%;
+    transform: translate(0, -50%);
+  }
+}
+
+///
+/// Vertically-center the direct descendants of the current element.
+///
+/// Centering is achieved by displaying children as inline-blocks. Any whitespace
+/// between elements is nullified by redefining the font size of the container
+/// and its children.
+///
+/// @output `font-size`, `display`, `vertical-align`
+///
+@mixin vcenter {
+  font-size: 0;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+  }
+
+  > * {
+    display: inline-block;
+    font-size: 1rem;
+    vertical-align: middle;
+  }
+}
+
+///
+/// Lock the aspect ratio of an element – or make it fit to
+/// content if it exceeds the boundaries of the aspect ratio.
+///
+/// Note! the ratio is produced using the :before and :after pseudo-elements.
+/// Why it won't work on empty tags like <img />, <input /> etc.
+///
+/// If used with flexbox – the ratio keeping pesudo element will actas a hidden flex-item.
+///
+/// @example scss
+///   @include ratio;              // No arguments defaults to a 1:1 ratio
+///   @include ratio(16, 9);       // Width and height
+///   @include ratio(1.777778);    // Ratio (calculated width/height)
+///   @include ratio(4px, 3px);    // Comparable units
+///   @include ratio($ratio: 1.2); // Keywords
+///
+/// @param  {List} $arglist - `ratio` or `width`, `height`
+/// @requires {function} list-nth-or-null
+/// @output Injects `::before` and `::after` pseudo-element.
+///
+@mixin ratio($arglist...) {
+  $map: meta.keywords($arglist);
+  $height: map.get($map, height) or list.nth-or-null($arglist, 2);
+  $width: map.get($map, width) or list.nth-or-null($arglist, 1);
+  $ratio: map.get($map, ratio) or if($width and $height, $width / $height, list.nth-or-null($arglist, 1)) or 1;
+  $padding: 1 / $ratio * 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    display: table;
+    width: 1px;
+    margin-left: -1px;
+    clear: both;
+  }
+
+  &::before {
+    padding-bottom: $padding;
+    float: left;
+  }
+}
+
+///
+/// Set position of an element using the syntax "padding-shorthand-syntax"
+/// (`position`, `top`, `right`, `bottom`, `left` and `z-index`)... and it takes keywords too.
+///
+/// @example scss
+///                                                            //  TOP    RIGHT    BOTTOM    LEFT    Z-INDEX
+///                                                            // ------------------------------------------
+/// @include el-position;                                      //  0      0        0         0       auto
+/// @include el-position(absolute, 10px);                      // 10px    10px     10px      10px    auto
+/// @include el-position(absolute, 10px, 20px);                // 10px    20px     10px      20px    auto
+/// @include el-position(absolute, 10px, 20px, 30px);          // 10px    20px     30px      20px    auto
+/// @include el-position(absolute, 10px, 20px, 30px, 40px);    // 10px    20px     30px      40px    auto
+/// @include el-position($bottom: 30px);                       //  0      0        30px      0       auto
+/// @include el-position(absolute, 10px, $bottom: 30px);       // 10px    10px     30px      10px    auto
+/// @include el-position(absolute, 10px, $bottom: 30px);       // 10px    10px     30px      10px    auto
+/// @include el-position(absolute, 10px, 20px, 30px, 40px, 3); // 10px    20px     30px      40px    3
+/// @include el-position(absolute, 10px, $z-index: 2);         // 10px    10px     10px      10px    2
+///
+/// @param  {List} $arglist - `position`, `top`, `right`, `bottom`, `left` and z-index.
+///
+/// @requires {function} list-nth-or-null
+///
+/// @output Injects `position`, `top`, `right`, `bottom` and `left`.
+///
+@mixin position($arglist...) {
+  $map: meta.keywords($arglist);
+
+  position: map.get($map, position) or list.nth-or-null($arglist, 1) or absolute;
+  z-index: map.get($map, z-index) or list.nth-or-null($arglist, 6) or auto;
+  top: map.get($map, top) or list.nth-or-null($arglist, 2) or 0;
+  right: map.get($map, right) or list.nth-or-null($arglist, 3) or list.nth-or-null($arglist, 2) or 0;
+  bottom: map.get($map, bottom) or list.nth-or-null($arglist, 4) or list.nth-or-null($arglist, 2) or 0;
+  left: map.get($map, left) or list.nth-or-null($arglist, 5) or list.nth-or-null($arglist, 3) or list.nth-or-null($arglist, 2) or 0;
+}
+
+///
+/// Set edges properties of an element to a unit above/below
+/// using a "padding-shorthand-syntax" (top, right-left, bottom)...
+/// and it takes keywords too.
+///
+/// @example scss
+///                                              //  TOP    RIGHT    BOTTOM    LEFT
+///                                              // --------------------------------
+/// @include el-trbl;                            //  0      0        0         0
+/// @include el-trbl(10px);                      //  10px   10px     10px      10px
+/// @include el-trbl(10px, 20px);                //  10px   20px     10px      20px
+/// @include el-trbl(10px, 20px, 30px);          //  10px   20px     30px      20px
+/// @include el-trbl(10px, 20px, 30px, 40px);    //  10px   20px     30px      40px
+/// @include el-trbl($bottom: 30px);             //  0      0        30px      0
+/// @include el-trbl(10px, $bottom: 30px);       //  10px   10px     30px      10px
+///
+/// @param  {List} $arglist - `top`, `right`, `bottom` and `left`
+///
+/// @requires {function} list-nth-or-null
+///
+/// @output Injects `top`, `right`, `bottom` and `left`.
+///
+@mixin trbl($arglist...) {
+  $map: meta.keywords($arglist);
+
+  top: map.get($map, top) or list.nth-or-null($arglist, 1) or 0;
+  right: map.get($map, right) or list.nth-or-null($arglist, 2) or list.nth-or-null($arglist, 1) or 0;
+  bottom: map.get($map, bottom) or list.nth-or-null($arglist, 3) or list.nth-or-null($arglist, 1) or 0;
+  left: map.get($map, left) or list.nth-or-null($arglist, 4) or list.nth-or-null($arglist, 2) or list.nth-or-null($arglist, 1) or 0;
+}
