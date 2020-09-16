@@ -34,11 +34,18 @@ $breakpoint-px-down: .02px !default;
 ///
 
 ///
-/// Body context (used to set the size of the rem or em)
+/// Body context em (used to set the size of the em)
 ///
 /// @type Length
 ///
-$body-context: 16px !default;
+$body-context-em: 16px !default;
+
+///
+/// Body context rem (used to set the size of the rem)
+///
+/// @type Length
+///
+$body-context-rem: 16px !default;
 
 ///
 /// -----------------------------------------------------------------------------------------------
