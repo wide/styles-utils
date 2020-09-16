@@ -4,13 +4,13 @@
 ///
 /// Converts the given pixel value to its EM quivalent.
 ///
-/// @param  {Number} $size                      - The pixel value to convert.
-/// @param  {Number} $context [$body-context]   - The assumed base font size.
+/// @param  {Number} $size                        - The pixel value to convert.
+/// @param  {Number} $context [$body-context-em]  - The assumed base font size.
 /// @return {Number} Scalable pixel value in EMs.
 ///
 /// @access public
 ///
-@function em($size, $context: $body-context) {
+@function em($size, $context: $body-context-em) {
   $size: number.check-value-unit($size);
   $context: number.check-value-unit($context);
 
@@ -20,13 +20,13 @@
 ///
 /// Converts the given pixel value to its REM quivalent.
 ///
-/// @param  {Number} $size                      - The pixel value to convert.
-/// @param  {Number} $context [$body-context]   - The assumed base font size.
+/// @param  {Number} $size                         - The pixel value to convert.
+/// @param  {Number} $context [$body-context-rem]  - The assumed base font size.
 /// @return {Number} Scalable pixel value in EMs.
 ///
 /// @access public
 ///
-@function rem($size, $context: $body-context) {
+@function rem($size, $context: $body-context-rem) {
   $size: number.check-value-unit($size);
   $context: number.check-value-unit($context);
   $rem-size: $size / $context;
