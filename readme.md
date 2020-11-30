@@ -1086,7 +1086,7 @@ Generate `:active` and `:hover` styles in one go.
 }
 ```
 
-### <a name="pc-av"></a>`ah()`
+### <a name="pc-av"></a>`av()`
 
 Generate `:active` and `:visited` styles in one go.
 
