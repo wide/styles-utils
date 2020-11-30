@@ -1008,10 +1008,18 @@ Injects generic rules for disabling `ul`, `ol`, `li` styles.
 - [a()](#pc-a)
 - [af()](#pc-af)
 - [ah()](#pc-ah)
+- [av()](#pc-av)
 - [afh()](#pc-afh)
+- [afv()](#pc-afv)
+- [ahv()](#pc-ahv)
+- [afhv()](#pc-afhv)
 - [f()](#pc-f)
 - [fh()](#pc-fh)
+- [fv()](#pc-fv)
+- [fhv()](#pc-fhv)
 - [h()](#pc-h)
+- [hv()](#pc-hv)
+- [v()](#pc-v)
 
 ### <a name="pc-a"></a>`a()`
 
@@ -1078,6 +1086,28 @@ Generate `:active` and `:hover` styles in one go.
 }
 ```
 
+### <a name="pc-av"></a>`av()`
+
+Generate `:active` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-av() {
+        background-color: green;
+    }
+}
+```
+
+#### Output
+```css
+.btn:active,
+.btn:visited {
+    background-color: green;
+}
+```
+
 ### <a name="pc-afh"></a>`afh()`
 
 Generate `:active`, `:focus` and `:hover` styles in one go.
@@ -1097,6 +1127,76 @@ Generate `:active`, `:focus` and `:hover` styles in one go.
 .btn:active,
 .btn:focus,
 .btn:hover {
+    background-color: yellow;
+}
+```
+
+### <a name="pc-afv"></a>`afv()`
+
+Generate `:active`, `:focus` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-afv() {
+        background-color: yellow;
+    }
+}
+```
+
+#### Output
+```css
+.btn:active,
+.btn:focus,
+.btn:visited {
+    background-color: yellow;
+}
+```
+
+### <a name="pc-ahv"></a>`ahv()`
+
+Generate `:active`, `:hover` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-ahv() {
+        background-color: yellow;
+    }
+}
+```
+
+#### Output
+```css
+.btn:active,
+.btn:hover,
+.btn:visited {
+    background-color: yellow;
+}
+```
+
+### <a name="pc-afhv"></a>`afhv()`
+
+Generate `:active`, `:focus`, `:hover` and `visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-afhv() {
+        background-color: yellow;
+    }
+}
+```
+
+#### Output
+```css
+.btn:active,
+.btn:focus,
+.btn:hover,
+.btn:visited {
     background-color: yellow;
 }
 ```
@@ -1144,6 +1244,51 @@ Generate `:focus` and `:hover` styles in one go.
 }
 ```
 
+### <a name="pc-fv"></a>`fv()`
+
+Generate `:focus` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-fv() {
+        background-color: black;
+    }
+}
+```
+
+#### Output
+```css
+.btn:focus,
+.btn:visited {
+    background-color: black;
+}
+```
+
+### <a name="pc-fhv"></a>`fhv()`
+
+Generate `:focus`, `:hover` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-fhv() {
+        background-color: black;
+    }
+}
+```
+
+#### Output
+```css
+.btn:focus,
+.btn:hover,
+.btn:visited {
+    background-color: black;
+}
+```
+
 ### <a name="pc-h"></a>`h()`
 
 Generate `:hover` styles in one go.
@@ -1161,6 +1306,49 @@ Generate `:hover` styles in one go.
 #### Output
 ```css
 .btn:hover {
+    background-color: white;
+}
+```
+
+### <a name="pc-hv"></a>`hv()`
+
+Generate `:hover` and `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-hv() {
+        background-color: white;
+    }
+}
+```
+
+#### Output
+```css
+.btn:hover,
+.btn:visited {
+    background-color: white;
+}
+```
+
+### <a name="pc-v"></a>`v()`
+
+Generate `:visited` styles in one go.
+
+```scss
+@use '@wide/styles-utils' as mixins;
+
+.btn {
+    @include mixins.pc-v() {
+        background-color: white;
+    }
+}
+```
+
+#### Output
+```css
+.btn:visited {
     background-color: white;
 }
 ```

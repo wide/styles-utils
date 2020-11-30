@@ -37,6 +37,19 @@
 }
 
 ///
+/// Generate `:active` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:active` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:active` and `:visited` pseudo-classe.
+///
+@mixin av {
+  &:active,
+  &:visited {
+    @content;
+  }
+}
+
+///
 /// Generate `:active`, `:focus` and `:hover` styles in one go.
 ///
 /// @content Wrapped in `:active`, `:focus` and `:hover` pseudo-classe.
@@ -46,6 +59,49 @@
   &:active,
   &:focus,
   &:hover {
+    @content;
+  }
+}
+
+///
+/// Generate `:active`, `:focus` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:active`, `:focus` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:active`, `:focus` and `:visited` pseudo-classe.
+///
+@mixin afv {
+  &:active,
+  &:focus,
+  &:visited {
+    @content;
+  }
+}
+
+///
+/// Generate `:active`, `:hover` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:active`, `:hover` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:active`, `:hover` and `:visited` pseudo-classe.
+///
+@mixin ahv {
+  &:active,
+  &:hover,
+  &:visited {
+    @content;
+  }
+}
+
+///
+/// Generate `:active`, `:focus`, `:hover` and `visited` styles in one go.
+///
+/// @content Wrapped in `:active`, `:focus`, `:hover` and `visited` pseudo-classe.
+/// @output  Wraps the given content in `:active`, `:focus`, `:hover` and `visited` pseudo-classe.
+///
+@mixin afhv {
+  &:active,
+  &:focus,
+  &:hover,
+  &:visited {
     @content;
   }
 }
@@ -76,6 +132,33 @@
 }
 
 ///
+/// Generate `:focus` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:focus` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:focus` and `:visited` pseudo-classe.
+///
+@mixin fv {
+  &:focus,
+  &:visited {
+    @content;
+  }
+}
+
+///
+/// Generate `:focus`, `:hover` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:focus`, `:hover` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:focus`, `:hover` and `:visited` pseudo-classe.
+///
+@mixin fhv {
+  &:focus,
+  &:hover,
+  &:visited {
+    @content;
+  }
+}
+
+///
 /// Generate `:hover` styles in one go.
 ///
 /// @content Wrapped in `:hover` pseudo-classe.
@@ -83,6 +166,31 @@
 ///
 @mixin h {
   &:hover {
+    @content;
+  }
+}
+
+///
+/// Generate `:hover` and `:visited` styles in one go.
+///
+/// @content Wrapped in `:hover` and `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:hover` and `:visited` pseudo-classe.
+///
+@mixin hv {
+  &:hover,
+  &:visited {
+    @content;
+  }
+}
+
+///
+/// Generate `:visited` styles in one go.
+///
+/// @content Wrapped in `:visited` pseudo-classe.
+/// @output  Wraps the given content in `:visited` pseudo-classe.
+///
+@mixin v {
+  &:visited {
     @content;
   }
 }
