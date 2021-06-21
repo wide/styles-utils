@@ -1,3 +1,4 @@
+@use 'sass:math';
 @use 'number' as number;
 @use '../variables' as *;
 
@@ -14,7 +15,7 @@
   $size: number.check-value-unit($size);
   $context: number.check-value-unit($context);
 
-  @return ($size / $context) * 1em;
+  @return math.div($size, $context) * 1em;
 }
 
 ///
@@ -29,7 +30,7 @@
 @function rem($size, $context: $body-context-rem) {
   $size: number.check-value-unit($size);
   $context: number.check-value-unit($context);
-  $rem-size: $size / $context;
+  $rem-size: math.div($size, $context);
 
   @return #{$rem-size}rem;
 }
