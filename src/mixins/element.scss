@@ -97,7 +97,7 @@
   $height: map.get($map, height) or list.nth-or-null($arglist, 2);
   $width: map.get($map, width) or list.nth-or-null($arglist, 1);
   $ratio: map.get($map, ratio) or if($width and $height, math.div($width, $height), list.nth-or-null($arglist, 1)) or 1;
-  $padding: math.div(1, $ratio * 100%);
+  $padding: math.div(1, $ratio) * 100%;
 
   &::before,
   &::after {
