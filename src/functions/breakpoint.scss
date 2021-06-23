@@ -119,7 +119,7 @@
   } @else if math.unit($value) == 'em' {
     @return $value;
   } @else if math.unit($value) == 'rem' {
-    @return math.div($value, $value * 0 + 1) * 1em; // hack ($value * 1em) not working
+    @return math.div($value, 1) * 1em; // hack ($value * 1em) not working
   } @else {
     @error 'Breakpoint value must have a unit if it\'s a number';
   }
