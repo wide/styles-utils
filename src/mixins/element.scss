@@ -1,6 +1,7 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
+@use 'sass:string';
 @use '../functions/list' as list;
 
 ///
@@ -140,8 +141,9 @@
 ///
 @mixin position($arglist...) {
   $map: meta.keywords($arglist);
+  $position: map.get($map, position) or list.nth-or-null($arglist, 1) or absolute;
 
-  position: map.get($map, position) or list.nth-or-null($arglist, 1) or absolute;
+  position: string.unquote($position);
   z-index: map.get($map, z-index) or list.nth-or-null($arglist, 6) or auto;
   top: map.get($map, top) or list.nth-or-null($arglist, 2) or 0;
   right: map.get($map, right) or list.nth-or-null($arglist, 3) or list.nth-or-null($arglist, 2) or 0;
